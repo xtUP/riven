@@ -1,0 +1,18 @@
+server:
+  port: 8778
+  servlet:
+    context-path: /riven
+#
+spring:
+  application:
+    name: riven
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 200MB

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- test -->
+<Configuration status="DEBUG" packages="com.msyd.antifraud.logutil">
+	<!-- 变量配置 -->
+	<!-- <Properties> <Property name="LOG_PATH">/Users/HaoHao/.logs/urule-server
+		</Property> <property name="FILE_NAME">urule-springboot</property> </Properties> -->
+	<Appenders>
+		<!--这个输出控制台的配置，这里输出除了warn和error级别的信息到System.out -->
+		<Console name="CONSOLE_OUT_APPENDER" target="SYSTEM_OUT">
+			<!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
+			<ThresholdFilter level="ERROR" onMatch="DENY"
+				onMismatch="NEUTRAL" />
+			<ThresholdFilter level="DEBUG" onMatch="ACCEPT"
+				onMismatch="DENY" />
+			<!-- CustomPatternLayout这个是自定义的，log4j2需要自定义CustomPatternLayout -->
+			<CustomPatternLayout
+				pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p] (%c{1}:%L) %m%n" />
+		</Console>
+		<!-- 这个输出控制台的配置，这里输出error级别的信息到System.err，在eclipse控制台上看到的是红色文字 -->
+		<Console name="CONSOLE_ERR_APPENDER" target="SYSTEM_ERR">
+			<!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
+			<ThresholdFilter level="ERROR" onMatch="ACCEPT"
+				onMismatch="DENY" />
+			<CustomPatternLayout
+				pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p] (%c{1}:%L) %m%n" />
+		</Console>
+
+	</Appenders>
+	<Loggers>
+		<!-- 配置日志的根节点 -->
+		<!-- 定义logger，只有定义了logger并引入了appender，appender才会生效; 日志级别设置成INFO，INFO及以上的日志会打印出来 -->
+		<root level="INFO">
+			<appender-ref ref="CONSOLE_OUT_APPENDER" />
+			<appender-ref ref="CONSOLE_ERR_APPENDER" />
+		</root>
+
+		<!-- 第三方日志系统 -->
+		<logger name="org.springframework.core" level="info" />
+		<logger name="org.springframework.beans" level="info" />
+		<logger name="org.springframework.context" level="info" />
+		<logger name="org.springframework.web" level="info" />
+		<logger name="org.jboss.netty" level="warn" />
+		<logger name="org.apache.http" level="warn" />
+
+	</Loggers>
+</Configuration>

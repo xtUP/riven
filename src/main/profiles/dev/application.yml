@@ -1,0 +1,62 @@
+server:
+  port: 8778
+  servlet:
+    context-path: /riven
+#
+spring:
+  application:
+    name: riven
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 200MB
+    #配置多数据源
+    datasource:
+      #主库
+      db:
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://172.30.9.20:3306/anti_fraud?useUnicode=true&characterEncoding=UTF-8&connectTimeout=60000&socketTimeout=60000&allowMultiQueries=true
+        username: root
+        password: j@2rc6#u$%O^Y*xo*8(D)IM.t
+        type: com.alibaba.druid.pool.DruidDataSource
+        druid:
+          max-active: 20
+          min-idle: 5
+          max-idle: 10
+          initial-size: 5
+          max-wait: 3000
+          keep-alive: true
+          validation-query: select 1 from dual
+          log-abandoned: true
+          remove-abandoned: true
+          remove-abandoned-timeout: 180
+          test-on-borrow: true
+          test-while-idle: true
+          time-between-eviction-runs-millis: 8500
+          min-evictable-idle-time-millis: 9500
+#需要引入actuator
+info:
+  app.name: anti-fraud-cloud
+  company.name: com.minsheng
+#actuator默认只会开启health和info两个端点；通过配置为*,开放所有端点；
+management:
+  server:
+    port: 54001
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always #设置为always时，details中任何一个指标状态为down，那么健康状态就为down
+#magic-api:
+#  banner: true
+#  web: /magic/web
+#  resource:
+#    location: /data/magic-api
